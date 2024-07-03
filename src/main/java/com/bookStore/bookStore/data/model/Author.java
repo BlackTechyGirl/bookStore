@@ -1,10 +1,13 @@
 package com.bookStore.bookStore.data.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,9 +20,16 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @NotBlank(message = "Firstname is mandatory")
+    private String firstName;
 
-    @Column(nullable = false)
-    private String bio;
+    @NotBlank(message = "Lastname is mandatory")
+    private String lastName;
+
+    @Column(name = "biography", length = 1000)
+    private String biography;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Book> books;
+
 }
