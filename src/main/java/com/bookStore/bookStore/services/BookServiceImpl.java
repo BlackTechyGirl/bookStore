@@ -18,29 +18,28 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@Builder
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
 
     @Override
-    public BookResponse createBook(CreateBookRequest request) {
+    public Book createBook(CreateBookRequest request) {
         Author author = authorRepository.findById(request.getAuthor().getId())
                 .orElseThrow(() -> new RuntimeException("Author not found with id: " + request.getAuthor()));
 
         Genre genre = genreRepository.findById(request.getAuthor().getId())
                 .orElseThrow(() -> new RuntimeException("Genre not found with id: " + request.getGenre()));
 
-        Book newBook = Book.builder()
-                .title(request.getTitle())
-                .author(author)
-                .genre(genre)
-                .yearPublished(request.getYearPublished())
-                .build();
+        Book book = new Book();
+        book.setTitle(request.getTitle());
+        book.setIsbn(request.getIsbn());
+        book.setPublisher(request.getPublisher());
+        book.setAuthor(author);
+        book.setGenre(genre);
+        book.setYearPublished(request.getYearPublished());
 
-        Book savedBook = bookRepository.save(newBook);
-        return convertToBookResponse(savedBook);
+        return bookRepository.save(book);
     }
 
     @Override

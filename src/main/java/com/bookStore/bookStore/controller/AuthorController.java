@@ -22,8 +22,7 @@ public class AuthorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAuthorById(@PathVariable Long id) {
-        Optional<Author> optionalAuthor = authorService.getAuthorById(id);
-        Author author = optionalAuthor.orElseThrow(() -> new AuthorNotFoundException("Author not found with id: " + id));
+        Author author = authorService.getAuthorById(id);
         return ResponseEntity.ok(author);
     }
 

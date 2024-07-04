@@ -11,7 +11,6 @@ import org.springframework.web.ErrorResponse;
 
 @Entity
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "books")

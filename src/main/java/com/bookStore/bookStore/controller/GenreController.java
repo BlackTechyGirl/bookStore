@@ -1,6 +1,7 @@
 package com.bookStore.bookStore.controller;
 
 import com.bookStore.bookStore.data.dto.requests.CreateGenreRequest;
+import com.bookStore.bookStore.data.dto.requests.UpdateGenreRequest;
 import com.bookStore.bookStore.data.dto.response.GenreResponse;
 import com.bookStore.bookStore.data.model.Genre;
 import com.bookStore.bookStore.exceptions.GenreNotFoundException;
@@ -28,38 +29,25 @@ public class GenreController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getGenreById(@PathVariable Long id) {
-        Genre genre = genreService.getGenreById(id)
-                .orElseThrow(() -> new GenreNotFoundException("Genre not found with id: " + id));
-        GenreResponse response = mapToGenreResponse(genre);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(genreService.getGenreById(id));
+
     }
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllGenres() {
         List<Genre> genres = genreService.getAllGenres();
-        List<GenreResponse> responses = genres.stream()
-                .map(this::mapToGenreResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(genres);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateGenre(@PathVariable Long id, @RequestBody CreateGenreRequest request) {
-        Genre updatedGenre = genreService.updateGenre(id, request);
-        GenreResponse response = mapToGenreResponse(updatedGenre);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> updateGenre(@PathVariable Long id, @RequestBody UpdateGenreRequest request) {
+        genreService.updateGenre(id, request);
+        return ResponseEntity.ok(new ApiResponse("Genre updated successfully", true));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteGenre(@PathVariable Long id) {
         genreService.deleteGenre(id);
         return ResponseEntity.ok(new ApiResponse("Genre deleted successfully", true));
-    }
-
-    private GenreResponse mapToGenreResponse(Genre genre) {
-        GenreResponse response = new GenreResponse();
-        response.setId(genre.getId());
-        response.setName(genre.getName());
-        return response;
     }
 }

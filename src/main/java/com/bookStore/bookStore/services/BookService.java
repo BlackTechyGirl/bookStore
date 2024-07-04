@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookService {
 
-    BookResponse createBook(CreateBookRequest request);
+    Book createBook(CreateBookRequest request);
 
     BookResponse getBookById(Long id);
 

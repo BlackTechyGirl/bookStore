@@ -2,6 +2,7 @@ package com.bookStore.bookStore.controller;
 
 import com.bookStore.bookStore.data.dto.requests.CreateBookRequest;
 import com.bookStore.bookStore.data.dto.response.BookResponse;
+import com.bookStore.bookStore.data.model.Book;
 import com.bookStore.bookStore.services.AuthorService;
 import com.bookStore.bookStore.services.BookService;
 import com.bookStore.bookStore.services.GenreService;
@@ -23,7 +24,7 @@ public class BookController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createBook(@RequestBody CreateBookRequest request) {
-        BookResponse createdBook = bookService.createBook(request);
+        Book createdBook = bookService.createBook(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Book created successfully", true));
     }
 

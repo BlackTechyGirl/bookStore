@@ -1,6 +1,7 @@
 package com.bookStore.bookStore.services;
 
 import com.bookStore.bookStore.data.dto.requests.CreateGenreRequest;
+import com.bookStore.bookStore.data.dto.requests.UpdateGenreRequest;
 import com.bookStore.bookStore.data.model.Genre;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface GenreService {
 
     List<Genre> getAllGenres();
 
-    Genre updateGenre(Long id, CreateGenreRequest request);
+    Genre updateGenre(Long id, UpdateGenreRequest request);
 
     void deleteGenre(Long id);
 }
