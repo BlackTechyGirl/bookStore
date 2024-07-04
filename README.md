@@ -31,12 +31,12 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your_username/bookstore.git
-   cd bookstore
+   git clone https://github.com/BlackTechyGirl/bookStore.git
+   cd bookStore
    ```
 
 2. **Configure MySQL:**
-   - Install MySQL and create a database named `bookstore`.
+   - Install MySQL and create a database named `bookstore_db`.
    - Update `secrets.properties` in `src/main/resources` with your MySQL username and password:
      ```properties
      spring.datasource.username=your_username
@@ -86,29 +86,4 @@ Contributions are welcome! Please fork this repository and create a pull request
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
-
-### How to Use
-
-1. **Clone the Repository:** Clone this repository to your local machine.
-2. **Setup MySQL:** Install MySQL and create a database named `bookstore`. Update `secrets.properties` with your MySQL credentials.
-3. **Run the Application:** Use Maven (`./mvnw spring-boot:run`) to start the application locally.
-4. **Access the Application:** Navigate to `http://localhost:8080` in your web browser to access the BookStore application.
-
-### API Endpoints
-
-- **Books:** CRUD operations for managing books.
-- **Authors:** Manage author details and their books.
-- **Genres:** Define and manage book genres.
-
-### Testing
-
-Unit tests and integration tests are provided to ensure the application's functionality. Run tests using `./mvnw test`.
-
-### Contributing
-
-Feel free to contribute to this project by forking the repository and submitting a pull request with your changes.
-
-### License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
