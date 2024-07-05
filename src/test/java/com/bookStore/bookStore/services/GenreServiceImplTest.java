@@ -5,6 +5,7 @@ import com.bookStore.bookStore.data.dto.requests.UpdateGenreRequest;
 import com.bookStore.bookStore.data.model.Genre;
 import com.bookStore.bookStore.data.repositories.GenreRepository;
 import com.bookStore.bookStore.exceptions.GenreNotFoundException;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+@Transactional
 public class GenreServiceImplTest {
+
     @Autowired
     private GenreService genreService;
 
@@ -45,7 +48,8 @@ public class GenreServiceImplTest {
 
     @Test
     void testGetGenreById() {
-        Optional<Genre> foundGenre = genreService.getGenreById(genre.getId());
+        Genre foundGenre = genreService.getGenreById(genre.getId())
+                .orElseThrow(() -> new GenreNotFoundException("Genre not found with id: " + genre.getId()));
 
         assertEquals(genre.getName(), foundGenre.getName());
     }
@@ -59,6 +63,7 @@ public class GenreServiceImplTest {
 
         assertEquals("Updated Fiction", updatedGenre.getName());
     }
+
 
     @Test
     void testDeleteGenre() {
