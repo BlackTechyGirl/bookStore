@@ -26,10 +26,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book createBook(CreateBookRequest request) {
         Author author = authorRepository.findById(request.getAuthor().getId())
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + request.getAuthor()));
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + request.getAuthor().getId()));
 
-        Genre genre = genreRepository.findById(request.getAuthor().getId())
-                .orElseThrow(() -> new RuntimeException("Genre not found with id: " + request.getGenre()));
+        Genre genre = genreRepository.findById(request.getGenre().getId())
+                .orElseThrow(() -> new RuntimeException("Genre not found with id: " + request.getGenre().getId()));
 
         Book book = new Book();
         book.setTitle(request.getTitle());
@@ -63,12 +63,14 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
 
         Author author = authorRepository.findById(request.getAuthor().getId())
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + request.getAuthor()));
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + request.getAuthor().getId()));
 
-        Genre genre = genreRepository.findById(request.getAuthor().getId())
-                .orElseThrow(() -> new RuntimeException("Genre not found with id: " + request.getGenre()));
+        Genre genre = genreRepository.findById(request.getGenre().getId())
+                .orElseThrow(() -> new RuntimeException("Genre not found with id: " + request.getGenre().getId()));
 
         existingBook.setTitle(request.getTitle());
+        existingBook.setIsbn(request.getIsbn());
+        existingBook.setPublisher(request.getPublisher());
         existingBook.setAuthor(author);
         existingBook.setGenre(genre);
         existingBook.setYearPublished(request.getYearPublished());
@@ -76,6 +78,7 @@ public class BookServiceImpl implements BookService {
         Book updatedBook = bookRepository.save(existingBook);
         return convertToBookResponse(updatedBook);
     }
+
 
     @Override
     public void deleteBook(Long id) {
